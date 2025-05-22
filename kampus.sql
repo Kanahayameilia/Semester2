@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Mar 2025 pada 05.50
--- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.2.4
+-- Generation Time: May 22, 2025 at 10:43 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,124 +24,114 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `mahasiswa`
+-- Table structure for table `dosen`
+--
+
+CREATE TABLE `dosen` (
+  `nip` char(10) NOT NULL,
+  `nama` varchar(50) DEFAULT NULL,
+  `bidang` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
-  `nim` int(11) NOT NULL,
-  `nama` varchar(100) DEFAULT NULL,
-  `jurusan` varchar(50) DEFAULT NULL
+  `nim` char(10) NOT NULL,
+  `nama` varchar(50) DEFAULT NULL,
+  `jurusan` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `mahasiswa`
+-- Dumping data for table `mahasiswa`
 --
 
 INSERT INTO `mahasiswa` (`nim`, `nama`, `jurusan`) VALUES
-(101, 'Andi', 'Informatika'),
-(102, 'Budi', 'Informatika'),
-(103, 'Citra', 'Sistem Informasi'),
-(104, 'Dewi', 'Sistem Informasi'),
-(105, 'Eka', 'Teknik Elektro');
+('1234567890', 'Lola', 'Gizi');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `matakuliah`
+-- Table structure for table `matakuliah`
 --
 
 CREATE TABLE `matakuliah` (
-  `kode_mk` varchar(10) NOT NULL,
-  `nama_mk` varchar(100) DEFAULT NULL
+  `kode_mk` char(6) NOT NULL,
+  `nama_mk` varchar(50) DEFAULT NULL,
+  `sks` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `matakuliah`
---
-
-INSERT INTO `matakuliah` (`kode_mk`, `nama_mk`) VALUES
-('MK001', 'Basis Data'),
-('MK002', 'Pemrograman'),
-('MK003', 'Jaringan Komputer');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `nilai`
+-- Table structure for table `tagihan`
 --
 
-CREATE TABLE `nilai` (
+CREATE TABLE `tagihan` (
   `id` int(11) NOT NULL,
-  `nim` int(11) DEFAULT NULL,
-  `kode_mk` varchar(10) DEFAULT NULL,
-  `nilai` int(11) DEFAULT NULL
+  `deskripsi` varchar(100) DEFAULT NULL,
+  `jumlah` decimal(10,2) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `nilai`
+-- Dumping data for table `tagihan`
 --
 
-INSERT INTO `nilai` (`id`, `nim`, `kode_mk`, `nilai`) VALUES
-(1, 101, 'MK001', 85),
-(2, 102, 'MK001', 90),
-(3, 103, 'MK001', 78),
-(4, 104, 'MK001', 88),
-(5, 105, 'MK001', 76),
-(6, 101, 'MK002', 92),
-(7, 102, 'MK002', 80),
-(8, 103, 'MK002', 85),
-(9, 104, 'MK002', 89),
-(10, 105, 'MK002', 95),
-(11, 101, 'MK003', 87),
-(12, 102, 'MK003', 75),
-(13, 103, 'MK003', 80),
-(14, 104, 'MK003', 91),
-(15, 105, 'MK003', 79);
+INSERT INTO `tagihan` (`id`, `deskripsi`, `jumlah`, `status`) VALUES
+(1, 'Pembayaran SPP', 500000.00, 'Lunas'),
+(2, 'Uang Lab', 250000.00, 'Lunas');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `temp_tabel`
+--
+
+CREATE TABLE `temp_tabel` (
+  `id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `mahasiswa`
+-- Indexes for table `dosen`
+--
+ALTER TABLE `dosen`
+  ADD PRIMARY KEY (`nip`);
+
+--
+-- Indexes for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`nim`);
 
 --
--- Indeks untuk tabel `matakuliah`
+-- Indexes for table `matakuliah`
 --
 ALTER TABLE `matakuliah`
   ADD PRIMARY KEY (`kode_mk`);
 
 --
--- Indeks untuk tabel `nilai`
+-- Indexes for table `tagihan`
 --
-ALTER TABLE `nilai`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `nim` (`nim`),
-  ADD KEY `kode_mk` (`kode_mk`);
+ALTER TABLE `tagihan`
+  ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `nilai`
---
-ALTER TABLE `nilai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `nilai`
+-- AUTO_INCREMENT for table `tagihan`
 --
-ALTER TABLE `nilai`
-  ADD CONSTRAINT `nilai_ibfk_1` FOREIGN KEY (`nim`) REFERENCES `mahasiswa` (`nim`),
-  ADD CONSTRAINT `nilai_ibfk_2` FOREIGN KEY (`kode_mk`) REFERENCES `matakuliah` (`kode_mk`);
+ALTER TABLE `tagihan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
